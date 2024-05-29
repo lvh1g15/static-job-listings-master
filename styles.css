@@ -1,0 +1,97 @@
+body {
+  height: 100vh;
+  margin: 0;
+  font-family: "League Spartan", sans-serif;
+}
+
+#backgroundHeader {
+  width: 100%;
+  height: 20%;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  margin-top: -5px;
+  background-color: hsl(180, 52%, 96%);
+  justify-content: center;
+}
+.container #jobListings {
+  width: 800px;
+  padding: 0px;
+}
+.container #jobListings li {
+  padding: 30px;
+  margin: 10px 0px 10px 0px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+.container #jobListings li img {
+  height: 70px;
+  width: 70px;
+}
+.container #jobListings li .startListingItems {
+  display: flex;
+  margin-left: 15px;
+  flex: 2;
+  flex-direction: column;
+}
+.container #jobListings li .startListingItems .companyAndLabels {
+  margin-bottom: 10px;
+}
+.container #jobListings li .startListingItems .companyAndLabels .companyName {
+  color: hsl(180, 29%, 50%);
+  font-weight: bold;
+  margin-right: 10px;
+}
+.container #jobListings li .startListingItems .companyAndLabels .newTag {
+  padding: 5px;
+  font-weight: bold;
+  background-color: hsl(180, 29%, 50%);
+  border-radius: 12px;
+  color: white;
+  margin-right: 5px;
+}
+.container #jobListings li .startListingItems .companyAndLabels .featuredTag {
+  padding: 5px;
+  font-weight: bold;
+  background-color: hsl(180, 14%, 20%);
+  border-radius: 12px;
+  color: white;
+}
+.container #jobListings li .startListingItems .position {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.container #jobListings li .startListingItems .position:hover {
+  color: hsl(180, 29%, 50%);
+  cursor: pointer;
+}
+.container #jobListings li .startListingItems .extraDetails {
+  color: gray;
+}
+.container #jobListings li .endListingItems {
+  display: flex;
+  flex: 3;
+  justify-content: flex-end;
+}
+.container #jobListings li .endListingItems button {
+  color: hsl(180, 29%, 50%);
+  border: none;
+  width: auto;
+  height: auto;
+  border-radius: 4px;
+  padding: 8px;
+  font-family: "League Spartan", sans-serif;
+  font-weight: bold;
+  background-color: hsl(180, 52%, 96%);
+  margin: 0 5px 0 5px;
+}
+.container #jobListings li .endListingItems button:hover {
+  color: white;
+  background-color: hsl(180, 29%, 50%);
+  cursor: pointer;
+}/*# sourceMappingURL=styles.css.map */

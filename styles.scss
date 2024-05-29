@@ -1,0 +1,103 @@
+$background-color: hsl(180, 52%, 96%);
+$filter-tablets: hsl(180, 31%, 95%);
+$on-select-filters: hsl(180, 29%, 50%);
+$font-family: "League Spartan", sans-serif;
+$dark-cyan: hsl(180, 14%, 20%);
+
+body{
+    height: 100vh;
+    margin: 0;
+    font-family: $font-family;
+}
+
+#backgroundHeader{
+    width: 100%;
+    height: 20%;
+}
+
+.container{
+    display: flex;
+    height: 100vh;
+    margin-top: -5px;
+    background-color: $background-color;
+    justify-content: center;
+    #jobListings{
+        width: 800px;
+        padding: 0px;
+        li{ 
+            padding: 30px;
+            margin: 10px 0px 10px 0px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            background-color: white;
+            img{
+                height: 70px;
+                width: 70px;
+            }
+            .startListingItems{
+                display: flex;
+                margin-left: 15px;
+                flex: 2;
+                flex-direction: column;
+                .companyAndLabels{
+                    margin-bottom: 10px;
+                    .companyName{
+                        color: $on-select-filters;
+                        font-weight: bold;
+                        margin-right: 10px;
+                    }
+                    .newTag{
+                        padding: 5px;
+                        font-weight: bold;
+                        background-color: $on-select-filters;
+                        border-radius: 12px;
+                        color: white;
+                        margin-right: 5px;
+                    }
+                    .featuredTag{
+                        padding: 5px;
+                        font-weight: bold;
+                        background-color: $dark-cyan;
+                        border-radius: 12px;
+                        color: white;
+                    }
+                }
+                .position{
+                    font-weight: bold;
+                    font-size: 20px;
+                    margin-bottom: 10px;
+                    &:hover{
+                        color: $on-select-filters;
+                        cursor: pointer;
+                    }
+                }
+                .extraDetails{
+                    color: gray;
+                }
+            }
+            .endListingItems{
+                display: flex;
+                flex: 3;
+                justify-content: flex-end;
+                button{
+                    color: $on-select-filters;
+                    border: none;
+                    width: auto;
+                    height: auto;
+                    border-radius: 4px;
+                    padding: 8px;
+                    font-family: $font-family;
+                    font-weight: bold;
+                    background-color: $background-color;
+                    margin: 0 5px 0 5px;
+                    &:hover{
+                        color: white;
+                        background-color: $on-select-filters;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
