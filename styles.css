@@ -6,7 +6,9 @@ body {
 
 #backgroundHeader {
   width: 100%;
-  height: 20%;
+  height: 200px;
+  z-index: 1;
+  position: relative;
 }
 
 .container {
@@ -16,9 +18,59 @@ body {
   background-color: hsl(180, 52%, 96%);
   justify-content: center;
 }
+.container #filterCategories {
+  height: 70px;
+  width: 1100px;
+  z-index: 5;
+  display: flex;
+  position: absolute;
+  margin-top: -30px;
+  background-color: white;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+}
+.container #filterCategories #filters {
+  display: flex;
+  margin-left: 25px;
+}
+.container #filterCategories #filters .filter {
+  margin: 0 10px 0 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.container #filterCategories #filters .filter span {
+  color: hsl(180, 29%, 50%);
+  background-color: hsl(180, 31%, 95%);
+  border-radius: 4px;
+  padding: 10px;
+  margin-right: -4px;
+}
+.container #filterCategories #filters .filter span:hover {
+  cursor: pointer;
+}
+.container #filterCategories #filters .filter button {
+  color: hsl(180, 29%, 50%);
+  border: none;
+  width: auto;
+  height: auto;
+  border-radius: 4px;
+  padding: 8px;
+  font-family: "League Spartan", sans-serif;
+  font-weight: bold;
+  background-color: hsl(180, 29%, 50%);
+  margin: 0 0px 0 0px;
+}
+.container #filterCategories #filters .filter button:hover {
+  color: white;
+  background-color: hsl(180, 14%, 20%);
+  cursor: pointer;
+}
 .container #jobListings {
-  width: 800px;
+  width: 1100px;
   padding: 0px;
+  margin-top: 50px;
 }
 .container #jobListings li {
   padding: 30px;
@@ -87,8 +139,8 @@ body {
   padding: 8px;
   font-family: "League Spartan", sans-serif;
   font-weight: bold;
-  background-color: hsl(180, 52%, 96%);
-  margin: 0 5px 0 5px;
+  background-color: hsl(180, 31%, 95%);
+  margin: 0 10px 0 10px;
 }
 .container #jobListings li .endListingItems button:hover {
   color: white;

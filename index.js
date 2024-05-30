@@ -1,4 +1,5 @@
 let jsonData;
+let filterSet = [];
 
 function loadJSON(callback) {   
     var xobj = new XMLHttpRequest();
@@ -17,8 +18,45 @@ loadJSON( async function(json) {
      for (const property in jsonData) {
         addHtmlElements(property);
     }
-    let buttons = document.getElementById('jobListings')
-    console.log(buttons);
+    let filters = document.getElementById('filters')
+    console.log(filters)
+    let buttonList = document.getElementById('jobListings')
+    console.log(buttonList);
+    let filter = document.createElement("div");
+    filter.classList.add("filter")
+    let filterText = document.createElement("span");
+    let filterButton = document.createElement("button")
+    let filterRemove = document.createElement("img")
+    
+    filterButton.addEventListener('click', function() { 
+        console.log('button remove')
+    });
+    buttonList.addEventListener('click', (event) => {
+        const isButton = event.target.nodeName === 'BUTTON';
+        if (!isButton) {
+          return;
+        }
+        let innerText = event.target.innerHTML
+
+        if(filterSet.includes(innerText)){   
+            return;
+        }else{
+            filterSet.push(innerText)
+            let idIndex = filterSet.indexOf(innerText)
+            filter.id = (`${innerText}${idIndex}`)
+            console.log(filter.id)
+            console.log('0000')
+            filterSet.add(innerText)
+            filterRemove.src = "images/icon-remove.svg"
+            filterRemove.alt = "remove"
+            filterButton.appendChild(filterRemove)
+            filterText.innerHTML = `${innerText}`
+            filter.appendChild(filterText)
+            filter.appendChild(filterButton)
+            filters.appendChild(filter)
+        }
+      })
+    
 });
 
 
