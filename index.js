@@ -1,4 +1,5 @@
 let jsonData;
+let filteredJsonData;
 let filterSet = [];
 
 function loadJSON(callback) {   
@@ -14,18 +15,22 @@ function loadJSON(callback) {
 }
 
 loadJSON( async function(json) {
-     jsonData = await json
-     for (const property in jsonData) {
-        addHtmlElements(property);
-    }
+    jsonData = await json
+    filteredJsonData = jsonData
+    console.log('loadjson')
+    console.log(jsonData.length);  
+
+    createHtmlElements(filteredJsonData)
     let filters = document.getElementById('filters')
     let buttonList = document.getElementById('jobListings')
     let clearButton = document.getElementById('clearAllFilters')
+
+
     
     clearButton.addEventListener('click', (event) => {
         filters.innerHTML = '';
         filterSet.length = 0;
-        renderFilters(buttonList)
+        createHtmlElements(jsonData)
     })
 
     filters.addEventListener('click', (event) => {
@@ -35,12 +40,15 @@ loadJSON( async function(json) {
             return;
         }
         if(!isButton){
+            console.log(event.target.parentNode.parentNode)
+            console.log('++++++++++++++++')
             filterSet.splice(event.target.parentNode.parentNode.id, 1)
             event.target.parentNode.parentNode.remove()
         }
         filterSet.splice(event.target.parentNode.id, 1)
         event.target.parentNode.remove()
-        renderFilters(buttonList)
+        filteredJsonData = loadListings()
+        createHtmlElements(filteredJsonData)
     })
 
     buttonList.addEventListener('click', (event) => {
@@ -68,39 +76,54 @@ loadJSON( async function(json) {
             filter.appendChild(filterText)
             filter.appendChild(filterButton)
             filters.appendChild(filter)
-            renderFilters(buttonList)
+            filteredJsonData = loadListings()
+            createHtmlElements(filteredJsonData)
         }
       })
 });
 
-function renderFilters(jobListings){
-    console.log('----------')
-    for(let x of Array.from(jobListings.children)) {
-        for(let y of Array.from(x.children[2].children[0].children)){
-            console.log(y)
-            filterSet.forEach(function(entry) {
-                console.log(entry);
-                console.log('++++++++++++++++')
-            });
-            if(filterSet.includes(y.innerHTML)){
-                console.log("show")
-                y.parentNode.parentNode.parentNode
-                break;
-            }else{
-                console.log("noshow")
-                y.parentNode.parentNode.parentNode.remove()
-            }
-        }
+function loadListings(){
+    // console.log('----------')
+    // for(let x of Array.from(jobListings.children)) {
+    //     console.log(x)
+    //     console.log('++++++++++++++++')
+    //     for(let y of Array.from(x.children[2].children[0].children)){
+    //         console.log(y)
+    //         if(filterSet.includes(y.innerHTML)){
+    //             y.parentNode.parentNode.parentNode
+    //             break;
+    //         }else{
+    //             y.parentNode.parentNode.parentNode.remove()
+    //         }
+    //     }
+    // }
+    // I want to remove a joblisting if the filter is not in the filterSet
+    return filteredJsonData.filter(job => {
+        // Check if the role or level matches any filter
+        const roleLevelMatch = filterSet.includes(job.role) || filterSet.includes(job.level);
+        
+        // Check if any language matches any filter
+        const languageMatch = job.languages.some(language => filterSet.includes(language));
+        
+        // Combine both conditions
+        return roleLevelMatch || languageMatch;
+    });
+}
+
+function createHtmlElements(data){
+    let jobsDisplay = document.getElementById('jobListings')
+    jobsDisplay.innerHTML = ''
+    for (const property in data) {
+        addHtmlElement(property, data);
     }
 }
 
-
-function addHtmlElements(jsonIndex){
+function addHtmlElement(jsonIndex, data){
     let jobListings = document.getElementById("jobListings");
     let jobListing = document.createElement("li");
     jobListing.setAttribute("id", `jobListing${jsonIndex}`);
     let img = document.createElement("img")
-    img.src = `${jsonData[jsonIndex].logo}`
+    img.src = `${data[jsonIndex].logo}`
     jobListing.appendChild(img)
     let startListItems = document.createElement("div");
     startListItems.classList.add("startListingItems")
@@ -108,11 +131,11 @@ function addHtmlElements(jsonIndex){
     companyAndLabels.classList.add("companyAndLabels")
     let companyName = document.createElement("span");  
     companyName.classList.add("companyName")
-    companyName.innerHTML = `${jsonData[jsonIndex].company}`
+    companyName.innerHTML = `${data[jsonIndex].company}`
     let newTag = document.createElement("span");  
     newTag.classList.add("newTag")
     newTag.innerHTML = 'NEW!'
-    if(jsonData[jsonIndex].new){
+    if(data[jsonIndex].new){
         newTag.style.visibility = "visible"
     }else{
         newTag.style.visibility = "hidden"
@@ -120,18 +143,18 @@ function addHtmlElements(jsonIndex){
     let featuredTag = document.createElement("span");
     featuredTag.classList.add("featuredTag")
     featuredTag.innerHTML = 'FEATURED'
-    if(jsonData[jsonIndex].featured){
+    if(data[jsonIndex].featured){
         featuredTag.style.visibility = "visible"
     }else{
         featuredTag.style.visibility = "hidden"
     }  
     let position = document.createElement("div")
     position.classList.add("position")
-    position.innerHTML = `${jsonData[jsonIndex].position}`
+    position.innerHTML = `${data[jsonIndex].position}`
 
     let extraDetails = document.createElement("div")
     extraDetails.classList.add("extraDetails")
-    extraDetails.innerHTML = `${jsonData[jsonIndex].postedAt}  •  ${jsonData[jsonIndex].contract}  •  ${jsonData[jsonIndex].location}`
+    extraDetails.innerHTML = `${data[jsonIndex].postedAt}  •  ${data[jsonIndex].contract}  •  ${data[jsonIndex].location}`
     let endListItems = document.createElement("div");
     let filterButtons = document.createElement("div");
     endListItems.classList.add("endListingItems")
@@ -140,12 +163,12 @@ function addHtmlElements(jsonIndex){
 
     let roleButton = document.createElement("button");
     let levelButton = document.createElement("button")
-    roleButton.innerHTML = `${jsonData[jsonIndex].role}`
-    levelButton.innerHTML = `${jsonData[jsonIndex].level}`
-    let langArrSize = jsonData[jsonIndex].languages.length
-    let langArr = jsonData[jsonIndex].languages
-    let toolsArrSize = jsonData[jsonIndex].tools.length
-    let toolsArr = jsonData[jsonIndex].tools
+    roleButton.innerHTML = `${data[jsonIndex].role}`
+    levelButton.innerHTML = `${data[jsonIndex].level}`
+    let langArrSize = data[jsonIndex].languages.length
+    let langArr = data[jsonIndex].languages
+    let toolsArrSize = data[jsonIndex].tools.length
+    let toolsArr = data[jsonIndex].tools
     companyAndLabels.appendChild(companyName)
     companyAndLabels.appendChild(newTag)
     companyAndLabels.appendChild(featuredTag)
