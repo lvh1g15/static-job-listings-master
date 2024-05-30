@@ -30,6 +30,18 @@ body {
   justify-content: space-between;
   border-radius: 8px;
 }
+.container #filterCategories #clearAllFilters {
+  border: none;
+  margin-right: 30px;
+  background-color: white;
+  color: hsl(180, 29%, 50%);
+  font-family: "League Spartan", sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+.container #filterCategories #clearAllFilters:hover {
+  cursor: pointer;
+}
 .container #filterCategories #filters {
   display: flex;
   margin-left: 25px;

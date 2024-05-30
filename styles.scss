@@ -54,6 +54,18 @@ body{
         justify-content: space-between;
         border-radius: 8px;
 
+        #clearAllFilters{
+            border: none;
+            margin-right: 30px;
+            background-color: white;
+            color: $on-select-filters;
+            font-family: $font-family;
+            font-size: 16px;
+            font-weight: bold;
+            &:hover{
+                cursor: pointer;
+            }
+        }
         #filters{
             display: flex;
             margin-left: 25px;

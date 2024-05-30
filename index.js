@@ -19,18 +19,30 @@ loadJSON( async function(json) {
         addHtmlElements(property);
     }
     let filters = document.getElementById('filters')
-    console.log(filters)
     let buttonList = document.getElementById('jobListings')
-    console.log(buttonList);
-    let filter = document.createElement("div");
-    filter.classList.add("filter")
-    let filterText = document.createElement("span");
-    let filterButton = document.createElement("button")
-    let filterRemove = document.createElement("img")
+    let clearButton = document.getElementById('clearAllFilters')
     
-    filterButton.addEventListener('click', function() { 
-        console.log('button remove')
-    });
+    clearButton.addEventListener('click', (event) => {
+        filters.innerHTML = '';
+        filterSet.length = 0;
+        renderFilters(buttonList)
+    })
+
+    filters.addEventListener('click', (event) => {
+        const isButton = event.target.nodeName === 'BUTTON';
+        const isImg = event.target.nodeName === 'IMG'
+        if (!isButton && !isImg) {
+            return;
+        }
+        if(!isButton){
+            filterSet.splice(event.target.parentNode.parentNode.id, 1)
+            event.target.parentNode.parentNode.remove()
+        }
+        filterSet.splice(event.target.parentNode.id, 1)
+        event.target.parentNode.remove()
+        renderFilters(buttonList)
+    })
+
     buttonList.addEventListener('click', (event) => {
         const isButton = event.target.nodeName === 'BUTTON';
         if (!isButton) {
@@ -41,12 +53,14 @@ loadJSON( async function(json) {
         if(filterSet.includes(innerText)){   
             return;
         }else{
+            let filter = document.createElement("div");
+            filter.classList.add("filter")
+            let filterText = document.createElement("span");
+            let filterButton = document.createElement("button")
+            let filterRemove = document.createElement("img")
             filterSet.push(innerText)
             let idIndex = filterSet.indexOf(innerText)
-            filter.id = (`${innerText}${idIndex}`)
-            console.log(filter.id)
-            console.log('0000')
-            filterSet.add(innerText)
+            filter.id = (`${idIndex}`)
             filterRemove.src = "images/icon-remove.svg"
             filterRemove.alt = "remove"
             filterButton.appendChild(filterRemove)
@@ -54,10 +68,31 @@ loadJSON( async function(json) {
             filter.appendChild(filterText)
             filter.appendChild(filterButton)
             filters.appendChild(filter)
+            renderFilters(buttonList)
         }
       })
-    
 });
+
+function renderFilters(jobListings){
+    console.log('----------')
+    for(let x of Array.from(jobListings.children)) {
+        for(let y of Array.from(x.children[2].children[0].children)){
+            console.log(y)
+            filterSet.forEach(function(entry) {
+                console.log(entry);
+                console.log('++++++++++++++++')
+            });
+            if(filterSet.includes(y.innerHTML)){
+                console.log("show")
+                y.parentNode.parentNode.parentNode
+                break;
+            }else{
+                console.log("noshow")
+                y.parentNode.parentNode.parentNode.remove()
+            }
+        }
+    }
+}
 
 
 function addHtmlElements(jsonIndex){
